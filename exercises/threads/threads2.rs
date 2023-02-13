@@ -3,8 +3,6 @@
 // Building on the last exercise, we want all of the threads to complete their work but this time
 // the spawned threads need to be in charge of updating a shared value: JobStatus.jobs_completed
 
-// I AM NOT DONE
-
 use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
@@ -22,8 +20,9 @@ fn main() {
         let handle = thread::spawn(move || {
             thread::sleep(Duration::from_millis(250));
             // TODO: You must take an action before you update a shared value
-            let mut job_status = status_shared.lock().unwrap();
-            job_status.jobs_completed += 1;
+            // let mut job_status = status_shared.lock().unwrap();
+            // job_status.jobs_completed += 1;
+            status_shared.lock().unwrap().jobs_completed += 1;
         });
         handles.push(handle);
     }
@@ -33,4 +32,7 @@ fn main() {
         // interesting in the output? Do you have to 'join' on all the handles?
         println!("jobs completed {}", status.lock().unwrap().jobs_completed);
     }
+    // handles[0].join().unwrap();
+    println!("jobs completed {}", status.lock().unwrap().jobs_completed);
+
 }
